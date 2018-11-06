@@ -5,5 +5,8 @@
 
 
 
-Simple music shuffler
+Simple music shuffler and player
 
+
+## Changelog
+[List of changes](CHANGELOG.md)
