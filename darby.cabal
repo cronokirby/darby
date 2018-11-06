@@ -32,8 +32,6 @@ library
   default-extensions:
       OverloadedStrings
 
-  
-
 executable darby
   hs-source-dirs:      app
   main-is:             Main.hs
