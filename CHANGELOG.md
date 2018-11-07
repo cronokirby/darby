@@ -10,6 +10,11 @@ The change log is available [on GitHub][2].
 * [#1](https://github.com/cronokirby/darby/issues/1)
   Use `optparse-applicative` to parse and use a
   `Context` type.
+* [#3](https://github.com/cronokirby/darby/issues/3)
+  Create a `Playlist` module, with the ability to
+  read playlists from a directory.
+* [#4](https://github.com/cronokirby/darby/issues/4)
+  Add the ability to shuffle playlists
 * [#7](https://github.com/cronokirby/darby/issues/7)
   Make the CLI program shuffle and display a playlist
   of files in a directory.
