@@ -18,6 +18,9 @@ The change log is available [on GitHub][2].
 * [#7](https://github.com/cronokirby/darby/issues/7)
   Make the CLI program shuffle and display a playlist
   of files in a directory.
+* [#9](https://github.com/cronokirby/darby/issues/9)
+  Strip the extension of songs when displaying them.
+  
 
 [1]: https://pvp.haskell.org
 [2]: https://github.com/cronokirby/darby/releases
