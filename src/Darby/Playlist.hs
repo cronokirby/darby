@@ -2,9 +2,7 @@
 Description: Contains functionality related to songs and playlists
 -}
 module Darby.Playlist 
-    ( Song(..)
-    , PlayList(..)
-    , readPlaylist
+    ( readPlaylist
     )
 where
 
