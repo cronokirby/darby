@@ -1,5 +1,9 @@
 {-|
 Description: Contains functionality related to songs and playlists
+
+Exports opaque types, with the intention of
+being accessed with black box methods, like shuffle,
+or play.
 -}
 module Darby.Playlist 
     ( readPlaylist
@@ -14,6 +18,7 @@ import System.Directory (listDirectory)
 -- | Represents a song which can be played
 newtype Song = Song { songPath :: FilePath }
 
+-- | Represents a playlist of songs
 newtype PlayList = PlayList [Song]
 
 
