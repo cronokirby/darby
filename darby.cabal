@@ -25,12 +25,12 @@ library
   exposed-modules:     Darby
                        Darby.Context
                        Darby.Playlist
-                       Prelude
   ghc-options:         -Wall
   build-depends:       
-      base-noprelude       >= 4.11  && < 5
+      base-noprelude       >= 4.11   && < 5
+    , directory            >= 1.3    && < 1.4
     , optparse-applicative >= 0.14.2 && < 0.15
-    , relude               >= 0.4.0 && < 0.5
+    , relude               >= 0.4.0  && < 0.5
   default-language:    Haskell2010
   default-extensions:
       OverloadedStrings
@@ -43,6 +43,7 @@ executable darby
   build-depends:       
       base-noprelude
     , darby
+    , relude
   default-language:    Haskell2010
   default-extensions:
       OverloadedStrings
