@@ -16,19 +16,29 @@ import Relude
 
 import Data.Array.IO (IOArray, newListArray, 
                       readArray, writeArray)
+import Data.Text (stripSuffix)
 import System.Directory (listDirectory)
 import System.Random (randomRIO)
 
 
 -- | Represents a song which can be played
-newtype Song = Song { songPath :: FilePath }
+data Song = Song 
+    { songPath :: FilePath -- ^ The file for this song
+    , songName :: Text -- ^ The name of this song
+    }
+
+{- | Makes a song from a file by stripping the extension
+
+Returns Nothing if this isn't an mp3 file
+-}
+makeSong :: FilePath -> Maybe Song
+makeSong path =
+    Song path <$> stripSuffix ".mp3" (fromString path)
+
 
 -- | Represents a playlist of songs
 newtype Playlist = Playlist [Song]
 
-
-isMP3File :: FilePath -> Bool
-isMP3File str = isPrefixOf "3pm." (reverse str)
 
 {- | Reads a playlist from a base directory
 
@@ -39,10 +49,15 @@ files that we support.
 -}
 readPlaylist :: MonadIO m => FilePath -> m Playlist
 readPlaylist dir =
-    Playlist . map Song . filter isMP3File
+    Playlist . mapMaybe makeSong
     <$> liftIO (listDirectory dir)
 
 
+{- | Shuffle an array using Fishery-Yates
+
+Requires IO for random number generation, but
+also uses it for array manipulation.
+-}
 shuffle :: MonadIO m => Playlist -> m Playlist
 shuffle (Playlist songs) = fmap Playlist . liftIO $ do
     arr <- newArray ln songs
@@ -57,6 +72,7 @@ shuffle (Playlist songs) = fmap Playlist . liftIO $ do
     newArray :: Int -> [a] -> IO (IOArray Int a)
     newArray n xs = liftIO $ newListArray (1, n) xs
 
+-- | Print the names of every song in a playlist
 displayPlaylist :: MonadIO m => Playlist -> m ()
 displayPlaylist (Playlist songs) =
-    forM_ songs $ putStrLn . songPath
+    forM_ songs $ putTextLn . songName
