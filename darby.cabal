@@ -24,6 +24,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Darby
                        Darby.Context
+                       Darby.Playlist
                        Prelude
   ghc-options:         -Wall
   build-depends:       
@@ -33,6 +34,7 @@ library
   default-language:    Haskell2010
   default-extensions:
       OverloadedStrings
+      NoImplicitPrelude
 
 executable darby
   hs-source-dirs:      app
@@ -42,3 +44,6 @@ executable darby
       base-noprelude
     , darby
   default-language:    Haskell2010
+  default-extensions:
+      OverloadedStrings
+      NoImplicitPrelude
