@@ -7,6 +7,8 @@ or play.
 -}
 module Darby.Playlist 
     ( readPlaylist
+    , shuffle
+    , displayPlaylist
     )
 where
 
@@ -22,7 +24,7 @@ import System.Random (randomRIO)
 newtype Song = Song { songPath :: FilePath }
 
 -- | Represents a playlist of songs
-newtype PlayList = PlayList [Song]
+newtype Playlist = Playlist [Song]
 
 
 isMP3File :: FilePath -> Bool
@@ -35,14 +37,14 @@ and filtering out everything that isn't an mp3 file.
 This should be extended in the future to all music
 files that we support.
 -}
-readPlaylist :: MonadIO m => FilePath -> m PlayList
+readPlaylist :: MonadIO m => FilePath -> m Playlist
 readPlaylist dir =
-    PlayList . map Song . filter isMP3File
+    Playlist . map Song . filter isMP3File
     <$> liftIO (listDirectory dir)
 
 
-shuffle :: MonadIO m => PlayList -> m PlayList
-shuffle (PlayList songs) = fmap PlayList . liftIO $ do
+shuffle :: MonadIO m => Playlist -> m Playlist
+shuffle (Playlist songs) = fmap Playlist . liftIO $ do
     arr <- newArray ln songs
     forM [1..ln] $ \i -> do
         j  <- randomRIO (i, ln)
@@ -54,3 +56,7 @@ shuffle (PlayList songs) = fmap PlayList . liftIO $ do
     ln = length songs
     newArray :: Int -> [a] -> IO (IOArray Int a)
     newArray n xs = liftIO $ newListArray (1, n) xs
+
+displayPlaylist :: MonadIO m => Playlist -> m ()
+displayPlaylist (Playlist songs) =
+    forM_ songs $ putStrLn . songPath
