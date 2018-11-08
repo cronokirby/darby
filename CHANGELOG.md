@@ -20,6 +20,8 @@ The change log is available [on GitHub][2].
   of files in a directory.
 * [#9](https://github.com/cronokirby/darby/issues/9)
   Strip the extension of songs when displaying them.
+* [#12](https://github.com/cronokirby/darby/issues/12)
+  Adds basic playing of songs after shuffling them.
   
 
 [1]: https://pvp.haskell.org
