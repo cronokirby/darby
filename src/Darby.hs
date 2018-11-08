@@ -11,7 +11,6 @@ import Darby.Playlist (Playlist, displayPlaylist, readPlaylist,
                        shufflePlaylist)
 
 
-
 runDarby :: IO ()
 runDarby = runCLIContextM darby
 
