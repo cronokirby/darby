@@ -22,7 +22,10 @@ darby = do
     playlist <- if shuffle
         then playShuffle dir
         else playNoShuffle dir
-    liftIO . runMusicM $ playPlaylist playlist
+    display <- asks contextJustDisplay
+    if display
+        then displayPlaylist playlist
+        else liftIO . runMusicM $ playPlaylist playlist
   where
     readAndShuffle = readPlaylist >=> shufflePlaylist
     playShuffle :: FilePath -> ContextM Playlist
