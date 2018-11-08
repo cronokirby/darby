@@ -24,6 +24,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Darby
                        Darby.Context
+                       Darby.Music
                        Darby.Playlist
   ghc-options:         -Wall
   build-depends:       
