@@ -28,6 +28,8 @@ The change log is available [on GitHub][2].
 * [#16](https://github.com/cronokirby/darby/issues/16)
   Add a `display` option to print out the songs without
   playing them.
+* [#18](https://github.com/cronokirby/darby/issues/18)
+  Add a progress bar to display when playing songs.
   
 
 [1]: https://pvp.haskell.org
