@@ -20,6 +20,7 @@ import Relude
 import Data.Array.IO (IOArray, newListArray, 
                       readArray, writeArray)
 import Data.Text (stripSuffix)
+import qualified Sound.TagLib as Tag
 import System.Directory (listDirectory)
 import System.Random (randomRIO)
 
@@ -28,6 +29,7 @@ import System.Random (randomRIO)
 data Song = Song 
     { songPath :: FilePath -- ^ The file for this song
     , songName :: Text -- ^ The name of this song
+    , songDuration :: Integer -- ^ The seconds of the song
     }
     deriving (Eq, Show)
 
@@ -35,10 +37,23 @@ data Song = Song
 
 Returns Nothing if this isn't an mp3 file
 -}
-makeSong :: FilePath -> FilePath -> Maybe Song
-makeSong dir path =
-    Song (dir ++ "/" ++ path) 
-    <$> stripSuffix ".mp3" (fromString path)
+makeSong :: FilePath -> FilePath -> IO (Maybe Song)
+makeSong dir path = do
+    let suffix = stripSuffix ".mp3" (fromString path)
+    duration <- getDuration fullPath
+    wrapSong suffix duration
+  where
+    fullPath = dir ++ "/" ++ path
+    wrapSong :: Maybe Text -> Maybe Integer -> IO (Maybe Song)
+    wrapSong name duration = 
+        return $ Song fullPath 
+        <$> name
+        <*> duration
+    getDuration :: FilePath -> IO (Maybe Integer)
+    getDuration file = runMaybeT $ do
+        tagFile <- MaybeT $ Tag.open file
+        properties <- MaybeT $ Tag.audioProperties tagFile
+        liftIO $ Tag.duration properties
 
 
 -- | Represents a playlist of songs
@@ -56,9 +71,11 @@ This should be extended in the future to all music
 files that we support.
 -}
 readPlaylist :: MonadIO m => FilePath -> m Playlist
-readPlaylist dir =
-    Playlist . mapMaybe (makeSong dir)
-    <$> liftIO (listDirectory dir)
+readPlaylist dir = do
+    files <- liftIO $ listDirectory dir
+    maybeSongs <- liftIO $ mapM (makeSong dir) files
+    let filtered = catMaybes maybeSongs
+    return (Playlist filtered)
 
 
 {- | Shuffle an array using Fishery-Yates
