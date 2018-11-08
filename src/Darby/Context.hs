@@ -26,6 +26,7 @@ to shuffle, but will be expanded later.
 data Context = Context
     { contextDirectory :: FilePath
     , contextShuffle :: Bool
+    , contextJustDisplay :: Bool
     }
 
 
@@ -35,6 +36,10 @@ contextParser = Context
     <*> flag True False
         (  long "noshuffle"
         <> help "Set this to not shuffle the songs"
+        )
+    <*> switch
+        (  long "display"
+        <> help "Print out the list without playing it"
         )
 
 argsParser :: ParserInfo Context
