@@ -1,6 +1,5 @@
 import Relude
 
-import Control.Exception.Base (bracket)
 import System.Directory (removeFile)
 import Test.Hspec
 
