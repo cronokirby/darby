@@ -22,6 +22,9 @@ The change log is available [on GitHub][2].
   Strip the extension of songs when displaying them.
 * [#12](https://github.com/cronokirby/darby/issues/12)
   Adds basic playing of songs after shuffling them.
+* [#17](https://github.com/cronokirby/darby/issues/17)
+  Add a `noshuffle` option to not shuffle the songs
+  before playing them.
   
 
 [1]: https://pvp.haskell.org
