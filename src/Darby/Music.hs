@@ -15,6 +15,7 @@ where
 
 import Relude
 
+import Data.Text (justifyRight)
 import qualified SDL
 import qualified SDL.Mixer as Mix
 
@@ -41,14 +42,28 @@ runMusicM (MusicM action) = do
 -- | Takes a duration and outputs mm:ss format
 durationText :: Integer -> Text
 durationText int =
-    show (div int 60) <> ":" <> show (mod int 60)
+    show (div int 60) 
+    <> ":" 
+    <> justifyRight 2 '0' (show (mod int 60))
+    
+
+{- | Prints the completion status
+
+Takes the total duration of the song, and the current
+amount of seconds passed.
+-}
+printCompletion :: MonadIO m => Integer -> Integer -> m ()
+printCompletion full current = do
+    let fullText = durationText full
+        currentText = durationText current
+    putTextLn (currentText <> " / " <> fullText)
 
 -- | Plays a song until completion, blocking the thread
 playSong :: Song -> MusicM ()
 playSong song = do
     music <- Mix.load (songPath song)
     putTextLn ("Playing: " <> songName song)
-    putTextLn . durationText . songDuration $ song
+    printCompletion (songDuration song) 0
     Mix.playMusic Mix.Once music
     delayWhile Mix.playingMusic
     Mix.free music
