@@ -25,6 +25,9 @@ The change log is available [on GitHub][2].
 * [#17](https://github.com/cronokirby/darby/issues/17)
   Add a `noshuffle` option to not shuffle the songs
   before playing them.
+* [#16](https://github.com/cronokirby/darby/issues/16)
+  Add a `display` option to print out the songs without
+  playing them.
   
 
 [1]: https://pvp.haskell.org
