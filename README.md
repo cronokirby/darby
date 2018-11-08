@@ -25,11 +25,13 @@ another tool I made.
 ## Building
 
 Darby relies on `sdl2` and `sdl2-mixer` for playing audio,
+as well as `taglib` for reading the duration of 
+audio files,
 so the first step is to install those dependencies.
 
 ### Ubuntu
 ```
-sudo apt install libsdl2-dev libsdl2-mixer-dev
+sudo apt install libsdl2-dev libsdl2-mixer-dev libgtagc0-dev
 ```
 
 This should be similar on other platforms.
