@@ -1,5 +1,25 @@
 import Relude
 
+import Control.Exception.Base (bracket)
+import System.Directory (removeFile)
+import Test.Hspec
+
+import Darby.Playlist
+
 
 main :: IO ()
-main = putTextLn "Test-Suite not implemented"
+main = do
+    makeFiles
+    (hspec $ playlistSpec)
+    removeFiles
+  where
+    files = ["a.mp3", "b.mp3", "c.notmp3"]
+    makeFiles = forM_ files $ \file -> writeFile file ""
+    removeFiles = forM_ files removeFile
+
+
+playlistSpec =
+    describe "readPlayList" $ do
+        it "Reads the valid mp3 files in a directory" $
+            readPlaylist "." `shouldReturn` 
+                Playlist [Song "b.mp3" "b", Song "a.mp3" "a"]

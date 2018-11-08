@@ -64,6 +64,7 @@ test-suite darby-test
       base-noprelude
     , hspec
     , darby
+    , directory
     , relude
   default-language: Haskell2010
   default-extensions:
