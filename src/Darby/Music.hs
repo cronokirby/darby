@@ -43,6 +43,7 @@ playSong :: Song -> MusicM ()
 playSong song = do
     music <- Mix.load (songPath song)
     putTextLn ("Playing: " <> songName song)
+    print (songDuration song)
     Mix.playMusic Mix.Once music
     delayWhile Mix.playingMusic
     Mix.free music
