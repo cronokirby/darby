@@ -6,7 +6,10 @@ being accessed with black box methods, like shuffle,
 or play.
 -}
 module Darby.Playlist 
-    ( readPlaylist
+    ( Song(..)
+    , Playlist
+    , getPlaylist
+    , readPlaylist
     , shuffle
     , displayPlaylist
     )
@@ -26,6 +29,7 @@ data Song = Song
     { songPath :: FilePath -- ^ The file for this song
     , songName :: Text -- ^ The name of this song
     }
+    deriving (Eq, Show)
 
 {- | Makes a song from a file by stripping the extension
 
@@ -37,7 +41,10 @@ makeSong path =
 
 
 -- | Represents a playlist of songs
-newtype Playlist = Playlist [Song]
+newtype Playlist = Playlist 
+    { getPlaylist :: [Song] 
+    } 
+    deriving (Eq, Show)
 
 
 {- | Reads a playlist from a base directory
