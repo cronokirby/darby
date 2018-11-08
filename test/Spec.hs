@@ -10,7 +10,7 @@ import Darby.Playlist
 main :: IO ()
 main = do
     makeFiles
-    (hspec $ playlistSpec)
+    hspec playlistSpec
     removeFiles
   where
     files = ["a.mp3", "b.mp3", "c.notmp3"]
@@ -18,8 +18,9 @@ main = do
     removeFiles = forM_ files removeFile
 
 
+playlistSpec :: SpecWith ()
 playlistSpec =
-    describe "readPlayList" $ do
+    describe "readPlayList" $
         it "Reads the valid mp3 files in a directory" $
             readPlaylist "." `shouldReturn` 
                 Playlist [Song "b.mp3" "b", Song "a.mp3" "a"]
