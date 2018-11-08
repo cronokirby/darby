@@ -35,9 +35,10 @@ data Song = Song
 
 Returns Nothing if this isn't an mp3 file
 -}
-makeSong :: FilePath -> Maybe Song
-makeSong path =
-    Song path <$> stripSuffix ".mp3" (fromString path)
+makeSong :: FilePath -> FilePath -> Maybe Song
+makeSong dir path =
+    Song (dir ++ "/" ++ path) 
+    <$> stripSuffix ".mp3" (fromString path)
 
 
 -- | Represents a playlist of songs
@@ -56,7 +57,7 @@ files that we support.
 -}
 readPlaylist :: MonadIO m => FilePath -> m Playlist
 readPlaylist dir =
-    Playlist . mapMaybe makeSong
+    Playlist . mapMaybe (makeSong dir)
     <$> liftIO (listDirectory dir)
 
 
