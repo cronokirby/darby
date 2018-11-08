@@ -23,14 +23,19 @@ import Options.Applicative
 This is currently restricted to just the directory
 to shuffle, but will be expanded later.
 -}
-newtype Context = Context
+data Context = Context
     { contextDirectory :: FilePath
+    , contextShuffle :: Bool
     }
 
 
 contextParser :: Parser Context
 contextParser = Context
     <$> strArgument (metavar "DIRECTORY")
+    <*> flag True False
+        (  long "noshuffle"
+        <> help "Set this to not shuffle the songs"
+        )
 
 argsParser :: ParserInfo Context
 argsParser = info (contextParser <**> helper)

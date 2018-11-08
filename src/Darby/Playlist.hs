@@ -10,7 +10,7 @@ module Darby.Playlist
     , Playlist
     , getPlaylist
     , readPlaylist
-    , shuffle
+    , shufflePlaylist
     , displayPlaylist
     )
 where
@@ -66,8 +66,8 @@ readPlaylist dir =
 Requires IO for random number generation, but
 also uses it for array manipulation.
 -}
-shuffle :: MonadIO m => Playlist -> m Playlist
-shuffle (Playlist songs) = fmap Playlist . liftIO $ do
+shufflePlaylist :: MonadIO m => Playlist -> m Playlist
+shufflePlaylist (Playlist songs) = fmap Playlist . liftIO $ do
     arr <- newArray ln songs
     forM [1..ln] $ \i -> do
         j  <- randomRIO (i, ln)
