@@ -6,6 +6,7 @@ where
 import Relude
 
 import Darby.Context (ContextM, Context(..), runCLIContextM)
+import Darby.Music (runMusicM, playPlaylist)
 import Darby.Playlist (displayPlaylist, readPlaylist, shuffle)
 
 
@@ -20,6 +21,6 @@ darby = do
     putText "Shuffling "
     putStrLn (dir ++ "...")
     playlist <- readAndShuffle dir
-    displayPlaylist playlist
+    liftIO . runMusicM $ playPlaylist playlist
   where
     readAndShuffle = readPlaylist >=> shuffle
