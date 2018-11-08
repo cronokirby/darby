@@ -18,6 +18,7 @@ import Relude
 import Data.Text (justifyRight)
 import qualified SDL
 import qualified SDL.Mixer as Mix
+import qualified System.Console.ANSI as ANSI
 
 import Darby.Playlist (Song(..), Playlist, getPlaylist)
 
@@ -67,7 +68,9 @@ playSong song = do
     delayWhile Mix.playingMusic updateCompletion
     Mix.free music
   where
-    updateCompletion = printCompletion (songDuration song)
+    updateCompletion i = do
+        printCompletion (songDuration song) i
+        liftIO $ ANSI.cursorUpLine 1
 
 playPlaylist :: Playlist -> MusicM ()
 playPlaylist = mapM_ playSong . getPlaylist
