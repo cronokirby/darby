@@ -43,8 +43,20 @@ playSong :: Song -> MusicM ()
 playSong song = do
     music <- Mix.load (songPath song)
     putTextLn ("Playing: " <> songName song)
-    print (Mix.musicType music)
+    Mix.playMusic Mix.Once music
+    delayWhile Mix.playingMusic
     Mix.free music
 
 playPlaylist :: Playlist -> MusicM ()
 playPlaylist = mapM_ playSong . getPlaylist
+
+
+-- | Keeps spinning until the condition is false
+delayWhile :: MonadIO m => m Bool -> m ()
+delayWhile check = loop
+  where
+    loop = do
+        still <- check
+        when still $ do
+            SDL.delay 300
+            loop
