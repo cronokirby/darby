@@ -21,5 +21,5 @@ playlistSpec :: SpecWith ()
 playlistSpec =
     describe "readPlayList" $
         it "Reads the valid mp3 files in a directory" $
-            readPlaylist "." `shouldReturn` 
-                Playlist [Song "b.mp3" "b", Song "a.mp3" "a"]
+            getPlaylist <$> readPlaylist "." `shouldReturn` 
+                [Song "b.mp3" "b", Song "a.mp3" "a"]

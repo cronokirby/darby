@@ -7,7 +7,8 @@ or play.
 -}
 module Darby.Playlist 
     ( Song(..)
-    , Playlist(..)
+    , Playlist
+    , getPlaylist
     , readPlaylist
     , shuffle
     , displayPlaylist
@@ -40,7 +41,10 @@ makeSong path =
 
 
 -- | Represents a playlist of songs
-newtype Playlist = Playlist [Song] deriving (Eq, Show)
+newtype Playlist = Playlist 
+    { getPlaylist :: [Song] 
+    } 
+    deriving (Eq, Show)
 
 
 {- | Reads a playlist from a base directory
