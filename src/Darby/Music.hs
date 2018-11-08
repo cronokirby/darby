@@ -38,12 +38,17 @@ runMusicM (MusicM action) = do
     return a
 
 
+-- | Takes a duration and outputs mm:ss format
+durationText :: Integer -> Text
+durationText int =
+    show (div int 60) <> ":" <> show (mod int 60)
+
 -- | Plays a song until completion, blocking the thread
 playSong :: Song -> MusicM ()
 playSong song = do
     music <- Mix.load (songPath song)
     putTextLn ("Playing: " <> songName song)
-    print (songDuration song)
+    putTextLn . durationText . songDuration $ song
     Mix.playMusic Mix.Once music
     delayWhile Mix.playingMusic
     Mix.free music
