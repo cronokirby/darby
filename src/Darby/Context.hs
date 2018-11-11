@@ -41,9 +41,16 @@ contextParser = Context
         (  long "display"
         <> help "Print out the list without playing it"
         )
+    
+version :: Parser (a -> a)
+version = infoOption "Darby version 0.1.0" 
+    (  long "version" 
+    <> short 'v'
+    <> help "Display what version the program is using"
+    )
 
 argsParser :: ParserInfo Context
-argsParser = info (contextParser <**> helper)
+argsParser = info (contextParser <**> helper <**> version)
     (  fullDesc
     <> progDesc "Shuffle and play the songs in FILE"
     )
