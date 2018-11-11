@@ -32,12 +32,10 @@ darby = do
     playShuffle dir = do
         putText "Shuffling "
         putStrLn (dir ++ "...")
-        playlist <- readAndShuffle dir
-        return playlist
+        readAndShuffle dir
     playNoShuffle :: FilePath -> ContextM Playlist
     playNoShuffle dir = do
         putStrLn $ "Playing the songs from "
                 ++ dir ++ " in order..."
         readPlaylist dir
-        
     
